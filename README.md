@@ -1,5 +1,5 @@
 
-# Aries_2y_3dof_proj 
+# Aries_2y_proj
 
 # UNET_EDGE_DETECTOR
 ## Model
