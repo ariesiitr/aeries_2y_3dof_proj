@@ -5,24 +5,18 @@
 ## Model
 The objective of the model is to create an edge map of an input image. For which I have used a U-Net model because this work is very similar to semantic segmentation as we are classifing each pixel to a category edge(1) or non-edge(0).So it is intutive to get a concised feature reprsentation of the image and then reconstructing an edge map by upsampling these feature and for a better information flow we have residual conection between features during down sampling and up sampling. 
 
-But since the dataset on which the training is to be done contained only 200 images so training the unet from scratch was leading to overfiting so to overcome that I have used VGG19 pretrained model on ImageNet as the encoder part of unet for feature extraction. The intution behind it was simply that pretrained model must have learned to get low level and high level features for recognizing image structure and context which is quite similar operation that our model should also do to extract a good feature representation of image and later that feature is used in upsampling and reconstructing the edge map image.
+But since the dataset on which the training is to be done contained only 200 images so, training the unit from scratch was leading to overfitting so to overcome that, I have used the VGG19 pre-trained model on ImageNet as the encoder part of unet for feature extraction. The intuition behind it was simply that the pre-trained model must have learned to get low-level and high-level features for recognizing image structure and context, which is quite a similar operation that our model should also do to extract a good feature representation of the image and later that feature is used in upsampling and reconstructing the edge map image.
 
+## Loss Function
+The most crucial part of this model is the loss function as using BinaryCross Entropy loss fails here because the class is highly imbalanced, so the model learns to cheat and just perform well in classifying non-edge pixels correctly. And hence assign all the pixels as non-edge because it alone reduces the loss function drastically as these pixels have a high contribution to the loss. 
 
+**Loss Function:**  **-**(Beta)*(y_true)*(log(y_pred))-(1-Beta)*(1-y_true)*(log(1-y_pred))
 
+**Beta** = (Total Number of Edge Pixel)/(Total Number of Pixel in Image)
 
+By dynamically weighting the loss for every image we bring the contribution of edge and non edge classification to the same order so model will learn to perform well on both classifications and will not give a biased output.
 
-
-
-
-
-
-
-
-
-
-
-
-## Objective
+## Robotic Arm Implementation
 
 This repository provides a solution for controlling a robotic arm using an Arduino board to draw sketches or figures. The simulation is implemented using Matlab/Simulink.
 ## Hardware Implementation
