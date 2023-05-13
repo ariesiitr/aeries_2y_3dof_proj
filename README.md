@@ -1,9 +1,12 @@
 
 # Aries_2y_3dof_proj 
 
-## UNET_EDGE_DETECTOR
-
+# UNET_EDGE_DETECTOR
+## Model
 The objective of the model is to create an edge map of an input image. For which I have used a U-Net model because this work is very similar to semantic segmentation as we are classifing each pixel to a category edge(1) or non-edge(0).So it is intutive to get a concised feature reprsentation of the image and then reconstructing an edge map by upsampling these feature and for a better information flow we have residual conection between features during down sampling and up sampling. 
+
+But since the dataset on which the training is to be done contained only 200 images so training the unet from scratch was leading to overfiting so to overcome that I have used VGG19 pretrained model on ImageNet as the encoder part of unet for feature extraction. The intution behind it was simply that pretrained model must have learned to get low level and high level features for recognizing image structure and context which is quite similar operation that our model should also do to extract a good feature representation of image and later that feature is used in upsampling and reconstructing the edge map image.
+
 
 
 
