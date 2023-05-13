@@ -24,7 +24,7 @@ if the pixel value is greater than some threshold value then it becomes 1 or it 
 by this way the image is converted to a 2d array of size 100 * 100.
 this array is stored as a (.txt) file . 
  
-# Robotic Arm Implementation
+# Robotic arm Implementation
 
 This repository provides a solution for controlling a robotic arm using an Arduino board to draw sketches or figures. The simulation is implemented using Matlab/Simulink.
 ## Hardware Implementation
