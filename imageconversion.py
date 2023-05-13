@@ -1,5 +1,4 @@
 import cv2
-import tensorflow
 #load image
 img=cv2.imread(r"C:\Users\ksund\OneDrive\Desktop\trail\dog.png")
 print(img.shape)
