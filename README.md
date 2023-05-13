@@ -17,7 +17,7 @@ The most crucial part of this model is the loss function as using BinaryCross En
 By dynamically weighting the loss for every image we bring the contribution of edge and non edge classification to the same order so model will learn to perform well on both classifications and will not give a biased output.
 
 # Image to array conversion
-The image which is to be drawn ,is first passed through edge detection machanism.After that an important task is to convert the image data to array format,which could br further used for determining the coordinates .
+The image ,which is to be drawn ,is first passed through edge detection machanism.After that an important task is to convert the image data to array format,which could br further used for determining the coordinates for movement of robotic arm .
 for this purpose first the image is convertrd to grayscale using opencv library.
 after converting to grayscale the image is resized to 100 * 100 .then the pixel data is manipulated using tenserflow library
 if the pixel value is greater than some threshold value then it becomes 1 or it becomes 0.
