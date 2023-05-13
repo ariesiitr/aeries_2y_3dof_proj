@@ -23,6 +23,10 @@ after converting to grayscale the image is resized to 100 * 100 .then the pixel 
 if the pixel value is greater than some threshold value then it becomes 1 or it becomes 0.
 by this way the image is converted to a 2d array of size 100 * 100.
 this array is stored as a (.txt) file . 
+
+# How to send final coordinates to Robotic Arm
+
+In this segment, we detect the path in which the pen will move. First, we detect the portion which has to be drawn. Then, we make a visited array. Now, by using DFS (depth-first search) algorithm and a visited array, we can trace the path. After that, we send the coordinate (output by DFS) to the robotic arm, through which it has to pass (or draw). We also send a special parameter with the coordinate, which tells the robotic arm to draw or not.
  
 # Robotic_arm_Implementation
 
