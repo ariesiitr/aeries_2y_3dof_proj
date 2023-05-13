@@ -1,6 +1,23 @@
 
 # Aries_2y_3dof_proj 
 
+## UNET_EDGE_DETECTOR
+
+The objective of the model is to create an edge map of an input image. For which I have used a U-Net model because this work is very similar to semantic segmentation as we are classifing each pixel to a category edge(1) or non-edge(0).So it is intutive to get a concised feature reprsentation of the image and then reconstructing an edge map by upsampling these feature and for a better information flow we have residual conection between features during down sampling and up sampling. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Objective
 
