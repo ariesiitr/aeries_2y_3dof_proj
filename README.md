@@ -16,7 +16,7 @@ The most crucial part of this model is the loss function as using BinaryCross En
 
 By dynamically weighting the loss for every image we bring the contribution of edge and non edge classification to the same order so model will learn to perform well on both classifications and will not give a biased output.
 
-## Robotic Arm Implementation
+# Robotic Arm Implementation
 
 This repository provides a solution for controlling a robotic arm using an Arduino board to draw sketches or figures. The simulation is implemented using Matlab/Simulink.
 ## Hardware Implementation
