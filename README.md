@@ -77,11 +77,6 @@ Python Script:-
 ## Simulation on MATLAB/Simulink
 The verification of the sketch can be performed using the Robotics and Simscape Toolbox in Matlab. However, for this project, the inverse kinematics were hard-coded because the block provided by the robotics toolbox did not meet our requirements and was computationally expensive.
 
-## Results
-The following sketches were obtained as some samples.
-
-
-
 To work with this repository, please follow these steps:
 
 1. Import the 'rbTree' file into the Matlab workspace to import the rigidbody tree. Import the text file containing the coordinates as sets of column vectors.
@@ -90,3 +85,8 @@ To work with this repository, please follow these steps:
 4. You can also view the robotic simulation within the Matlab editor. 
 
 Please note that for this particular example, the coordinate space is set to 100x100 in the text file, representing the resized image.
+
+## Results
+
+The following sketches were obtained as a result from the program.
+https://github.com/sundramkumar252636/aeries_2y_3dof_proj/assets/133499612/307b6963-42c2-4cc7-a6e0-24c7af264a1c
