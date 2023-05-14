@@ -77,6 +77,11 @@ Python Script:-
 ## Simulation on MATLAB/Simulink
 The verification of the sketch can be performed using the Robotics and Simscape Toolbox in Matlab. However, for this project, the inverse kinematics were hard-coded because the block provided by the robotics toolbox did not meet our requirements and was computationally expensive.
 
+## Results
+The following sketches were obtained as some samples.
+
+
+
 To work with this repository, please follow these steps:
 
 1. Import the 'rbTree' file into the Matlab workspace to import the rigidbody tree. Import the text file containing the coordinates as sets of column vectors.
