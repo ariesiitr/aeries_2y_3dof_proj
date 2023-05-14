@@ -90,3 +90,4 @@ Please note that for this particular example, the coordinate space is set to 100
 
 The following sketches were obtained as a result from the program.
 https://github.com/sundramkumar252636/aeries_2y_3dof_proj/assets/133499612/307b6963-42c2-4cc7-a6e0-24c7af264a1c
+![image](https://github.com/sundramkumar252636/aeries_2y_3dof_proj/assets/133499612/9ff2b7a6-33cd-4bdb-95fd-b0323c05a441)
