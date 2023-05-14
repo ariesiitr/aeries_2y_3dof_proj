@@ -8,7 +8,7 @@ The first step towards Implementing an Image Drawing Robotic arm is to get an ed
 It contains 250 outdoor images of 1280 x 720 pixels each. Experts in the computer vision field have carefully annotated these images. Hence redundancy has yet to be considered. In spite of that, all results have been cross-checked several times to correct possible mistakes or edges by just one subject. This dataset is publicly available as a benchmark for evaluating edge detection algorithms. 
 
 ## Model
-The model's objective is to create an edge map of an input image. I have used a U-Net model because this work is very similar to semantic segmentation, as we classify each pixel into a category edge(1) or non-edge(0). So it is intuitive to get a concise feature representation of the image. Then reconstruct an edge map by upsampling these features, and for a better information flow, we have a residual connection between components during downsampling and upsampling.
+The model's objective is to create an edge map of an input image. I have used a U-Net model because this work is very similar to semantic segmentation, as we classify each pixel into a category edge(1) or non-edge(0). So it is intuitive to get a concise feature representation of the image. Then reconstruct an edge map by upsampling these features, and for a better information flow, we have skip connections between components during downsampling and upsampling.
 ### U-NET
 UNET is one of the most popular architectures used for image segmentation tasks because it is designed to efficiently capture local and global information in the input image while preserving fine-grained spatial information through skip connections. It consists of two parts: Encoder and Decoder.
 The encoder is a series of convolutional layers that extract features from the input image. Hence, we downsample the image to a consistent and rich feature representation of the image.
@@ -17,6 +17,14 @@ And in addition to this, the most crucial part of architecture is Skip Connectio
 
 ### Pretrained VGG19 Encoder
 But since the dataset on which the training is to be done contained only 200 images, training the unit from scratch led to overfitting. So to overcome that, I have used the VGG19 pre-trained model on ImageNet as the encoder part of unet for feature extraction. The intuition behind it was that the pre-trained model must have learned to get low-level and high-level features for recognizing image structure and context, which is quite a similar operation that our model should also do to extract a good feature representation of the image. Later that feature is used in upsampling and reconstructing the edge map image.
+
+## Preprocessing and Image Augumentation
+Fistly Image pixel were normalised which were in the range 0 to 255 to improve the performance of the model, particularly when using certain activation functions such as ReLU. This is because these activation functions are sensitive to the scale of the input values, and normalizing the input images helps to ensure that the activation functions are used in their most effective range. Moreover it also helps to avoid the problem of exploding or vanishing gradients during training.
+
+The ground truth target is an image again consisting pixel value from 0 to 255 so this image is converted to edge map where each pixel is classified as 1(edge pixel) or 0 (non-edge pixel) so that training can be done to classify every pixels.
+
+Since the dataset consist of very less number of images data augmentation can be one solution to increase the training dataset.But augumentation technique like roation will not be useful as in this case after rotation there are some empty pixel places wich are filled with last true pixel and since our edge map will have less number of edge pixel this error could hamper the performance of our model.Also changing contrast or brightness wil not be useful because for our downline usecase of this model there is hardly a chance where such image will be encountered so it's not worth doing.Left right flipping of image can be useful technique to make the model more robust and increase model performance.
+
 
 ## Loss Function
 The most crucial part of this model is the loss function, as using BinaryCross Entropy loss fails here because the class is highly imbalanced, so the model learns to cheat and perform well in classifying non-edge pixels correctly. And hence assign all the pixels as non-edge because it reduces the loss function drastically, as these pixels have a high contribution to the loss. 
