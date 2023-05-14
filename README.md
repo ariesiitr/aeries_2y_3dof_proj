@@ -2,31 +2,42 @@
 # Aries_2y_proj
 
 # UNET_EDGE_DETECTOR
-## Model
-The objective of the model is to create an edge map of an input image. For which I have used a U-Net model because this work is very similar to semantic segmentation as we are classifing each pixel to a category edge(1) or non-edge(0).So it is intutive to get a concised feature reprsentation of the image and then reconstructing an edge map by upsampling these feature and for a better information flow we have residual conection between features during down sampling and up sampling. 
+The first step towards Implementing an Image Drawing Robotic arm is to get an edge map of the Image from which the coordinates can be extracted and can further be provided to the component for tracing the image on paper. And for this purpose, I have used Deep Learning models trained on BIPED Dataset.
 
-But since the dataset on which the training is to be done contained only 200 images so, training the unit from scratch was leading to overfitting so to overcome that, I have used the VGG19 pre-trained model on ImageNet as the encoder part of unet for feature extraction. The intuition behind it was simply that the pre-trained model must have learned to get low-level and high-level features for recognizing image structure and context, which is quite a similar operation that our model should also do to extract a good feature representation of the image and later that feature is used in upsampling and reconstructing the edge map image.
+## Dataset
+It contains 250 outdoor images of 1280 x 720 pixels each. Experts in the computer vision field have carefully annotated these images. Hence redundancy has yet to be considered. In spite of that, all results have been cross-checked several times to correct possible mistakes or edges by just one subject. This dataset is publicly available as a benchmark for evaluating edge detection algorithms. 
+
+## Model
+The model's objective is to create an edge map of an input image. I have used a U-Net model because this work is very similar to semantic segmentation, as we classify each pixel into a category edge(1) or non-edge(0). So it is intuitive to get a concise feature representation of the image. Then reconstruct an edge map by upsampling these features, and for a better information flow, we have a residual connection between components during downsampling and upsampling.
+### U-NET
+UNET is one of the most popular architectures used for image segmentation tasks because it is designed to efficiently capture local and global information in the input image while preserving fine-grained spatial information through skip connections. It consists of two parts: Encoder and Decoder.
+The encoder is a series of convolutional layers that extract features from the input image. Hence, we downsample the image to a consistent and rich feature representation of the image.
+The decoder then consists of a series of upsampling layers that gradually increase the spatial resolution of the feature maps. Each upsampling layer is then followed by a block consisting of two convolutional layers, which combine information from the corresponding layer in the encoder and the upsampled feature maps.
+And in addition to this, the most crucial part of architecture is Skip Connections. These skip connections allow information from the encoder to be directly passed to corresponding layers in the decoder, preserving fine-grained spatial information and improving the accuracy of the segmentation.
+
+### Pretrained VGG19 Encoder
+But since the dataset on which the training is to be done contained only 200 images, training the unit from scratch led to overfitting. So to overcome that, I have used the VGG19 pre-trained model on ImageNet as the encoder part of unet for feature extraction. The intuition behind it was that the pre-trained model must have learned to get low-level and high-level features for recognizing image structure and context, which is quite a similar operation that our model should also do to extract a good feature representation of the image. Later that feature is used in upsampling and reconstructing the edge map image.
 
 ## Loss Function
-The most crucial part of this model is the loss function as using BinaryCross Entropy loss fails here because the class is highly imbalanced, so the model learns to cheat and just perform well in classifying non-edge pixels correctly. And hence assign all the pixels as non-edge because it alone reduces the loss function drastically as these pixels have a high contribution to the loss. 
+The most crucial part of this model is the loss function, as using BinaryCross Entropy loss fails here because the class is highly imbalanced, so the model learns to cheat and perform well in classifying non-edge pixels correctly. And hence assign all the pixels as non-edge because it reduces the loss function drastically, as these pixels have a high contribution to the loss. 
 
 **Loss Function:**  **-**(Beta)*(y_true)*(log(y_pred))-(1-Beta)*(1-y_true)*(log(1-y_pred))
 
 **Beta** = (Total Number of Edge Pixel)/(Total Number of Pixel in Image)
 
-By dynamically weighting the loss for every image we bring the contribution of edge and non edge classification to the same order so model will learn to perform well on both classifications and will not give a biased output.
+By dynamically weighting the loss for every image, we bring the contribution of edge and nonedge classification to the same order so the model will learn to perform well on both classifications and not give a biased output.
 
 # Image to array conversion
-The image ,which is to be drawn ,is first passed through edge detection machanism.After that an important task is to convert the image data to array format,which could br further used for determining the coordinates for movement of robotic arm .
+The image,which is to be drawn,is first passed through edge detection machanism.After that an important task is to convert the image data to array format,which could br further used for determining the coordinates for movement of robotic arm .
 for this purpose first the image is convertrd to grayscale using opencv library.
 after converting to grayscale the image is resized to 100 * 100 .then the pixel data is manipulated using tenserflow library
-if the pixel value is greater than some threshold value then it becomes 1 or it becomes 0.
+if the pixel value is greater than some threshold value, it becomes 1 or 0.
 by this way the image is converted to a 2d array of size 100 * 100.
 this array is stored as a (.txt) file . 
 
 # How to send final coordinates to Robotic Arm
 
-In this segment, we detect the path in which the pen will move. First, we detect the portion which has to be drawn. Then, we make a visited array. Now, by using DFS (depth-first search) algorithm and a visited array, we can trace the path. After that, we send the coordinate (output by DFS) to the robotic arm, through which it has to pass (or draw). We also send a special parameter with the coordinate, which tells the robotic arm to draw or lift the pen .
+In this segment, we detect the path in which the pen will move. First, we detect the portion which has to be drawn. Then, we make a visited array. Now, we can trace the path using the DFS (depth-first search) algorithm and a visited array. After that, we send the coordinate (output by DFS) to the robotic arm, through which it has to pass (or draw). We also send a special parameter with the coordinate, which tells the robotic arm to draw or lift the pen .
  
 # Robotic_arm_Implementation
 
