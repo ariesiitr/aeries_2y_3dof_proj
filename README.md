@@ -27,8 +27,12 @@ Since the dataset consist of very less number of images data augmentation can be
 
 
 ## Loss Function
-The most crucial part of this model is the loss function, as using BinaryCross Entropy loss fails here because the class is highly imbalanced, so the model learns to cheat and perform well in classifying non-edge pixels correctly. And hence assign all the pixels as non-edge because it reduces the loss function drastically, as these pixels have a high contribution to the loss. 
+### Why Need of Custom Loss Function?
+The most crucial part of this model is the loss function, as using BinaryCross Entropy loss fails here because the class is highly imbalanced, so the model learns to cheat and perform well in classifying non-edge pixels correctly. And hence assign all the pixels as non-edge because it reduces the loss function drastically, as these pixels have a high contribution to the loss.T his problem mainly occurs due to large number of non edge pixel i.e.. almost 97% of the total pixels so it's obvious that model will try to perform better on these pixels majorly but again that was not our objective.So there is a need of weighted cross entopy loss so that we can bring the contribution of loss due to classification of both edge and non edge pixel to same order so that our model tries to perform well in both cases.
 
+Though we have some standard tensorflow fuction for weighted CrossEntropy Loss but those were not useful here because in those cases we were assigning a multiple to increase weight on true classification then here again the model was now getting biased to classify the edge pixels correctly and ended up assigning all pixel as edge pixel.Moreover, here the weight is a, new hyperparameter that needs to be tuned which is again a big problem and also the same weight of each class is used for every image that is also not correct because every image has different ratio of edge and non edge pixel.So catering all these problems I have used a dynamically weigheing loss function for each image.
+
+### Custom Loss Function
 **Loss Function:**  **-**(Beta)*(y_true)*(log(y_pred))-(1-Beta)*(1-y_true)*(log(1-y_pred))
 
 **Beta** = (Total Number of Edge Pixel)/(Total Number of Pixel in Image)
