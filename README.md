@@ -39,6 +39,19 @@ Though we have some standard tensorflow fuction for weighted CrossEntropy Loss b
 
 By dynamically weighting the loss for every image, we bring the contribution of edge and nonedge classification to the same order so the model will learn to perform well on both classifications and not give a biased output.
 
+## Metric
+Binary Accuracy is not a good mertric here because the target is highly imbalenced so even if all pixel are assigned non-edge accuracy will we 97% which may seem great but it's not the actual case,hence this could be misleading.So here we use F1 score as our metric,which take into account not only the number of prediction errors that your model makes, but that also look at the type of errors that are made..
+
+F1 score is harmonic mean of Precision and Recall value and is in range 0 to 1. 
+
+Precision: Within everything that has been predicted as a positive, precision counts the percentage that is correct.
+   
+   Precision= Number of True Positives/(Number of True Positives + Number of False Positives)
+
+Recall:Within everything that actually is positive, how many did the model succeed to find.
+   
+   Recall= Number of True Positives/(Number of True Positives + Number of False Negatives)
+
 # Image to array conversion
 The image,which is to be drawn,is first passed through edge detection machanism.After that an important task is to convert the image data to array format,which could br further used for determining the coordinates for movement of robotic arm .
 for this purpose first the image is convertrd to grayscale using opencv library.
